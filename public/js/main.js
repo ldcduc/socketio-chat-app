@@ -21,7 +21,6 @@ socket.on('roomUsers', ({ room, users }) => {
 
 // Message from server
 socket.on('message', message => {
-    console.log(message);
     outputMessage(message);
 
     // Scroll down
@@ -32,7 +31,7 @@ socket.on('message', message => {
 chatForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    const msg = e.target.elements.msg.value;
+    let msg = e.target.elements.msg.value;
     msg = msg.trim();
     
     // Emit message to server

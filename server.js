@@ -38,6 +38,13 @@ io.on('connection', socket => {
         });
     });
 
+    // Listen to chatMessage
+    socket.on('chatMessage', (msg) => {
+        const user = getCurrentUser(socket.id);
+
+        io.to(user.room).emit('message', formatMessage(user.username, msg));
+    });
+
     // Runs when client disconnects
     socket.on('disconnect', () => {
         const user = userLeave(socket.id);
@@ -54,13 +61,6 @@ io.on('connection', socket => {
                 users: getRoomUsers(user.room)
             });
         }
-    });
-
-    // Listen to chatMessage
-    socket.on('chatMessage', (msg) => {
-        const user = getCurrentUser(socket.id);
-
-        io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
 });
 
